@@ -1,0 +1,10 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}This is an example page{% endblock title %}
+
+{% block navbar %}
+  {% include 'common/navbar.html' %}
+{% endblock navbar %}
+
+{% block content %}
+	{% include 'twsurvey/htmlcode.html' %}
+{% endblock content %}

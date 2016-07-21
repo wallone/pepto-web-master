@@ -1,0 +1,119 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Twitter Health{% endblock title %}
+
+{% block navbar %}
+  {% include 'common/navbar.html' %}
+{% endblock navbar %}
+
+{% block content %}
+  <head>
+    <title>Twitter Health</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/labeler/">Labeler</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li {% if request.path == "/labeler/" %} class="active" {% endif %}>
+              <a href="/labeler">Overview</a>
+              {% if request.path == "/labeler/" %}<span class="sr-only">(current)</span>{% endif %}
+            </li>
+            <li {% if request.path == "/labeler/instructions" %} class="active" {% endif %}>
+              <a href="#instruction" data-toggle="modal">Instructions</a>
+              {% if request.path == "/labeler/instructions" %}<span class="sr-only">(current)</span>{% endif %}
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-
+                 expanded="false">Projects<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/labeler/gi">Gastrointestinal Illness</a></li>
+                <li><a href="/labeler/chd">Coronary Heart Disease</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              {% if 'logged_in' in session%}
+                <li><a href="/labeler/logout">Logout</a></li>
+              {% else %}
+                <li {% if request.path == "/labeler/login" %} class="active" {% endif %}>
+                  <a href="/labeler/login">Login</a>
+                  {% if request.path == "/labeler/login" %}<span class="sr-only">(current)</span>{% endif %}
+                </li>
+              {% endif %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><Center>Coming Soon...</h4>
+            </div>
+            <div class="panel-body">
+                <form class="tweet" action="" method="post">
+                    {% if tweets %}
+                    <ul class="list-group">
+                        {% for i in range(length) %}
+                        <li class="list-group-item">
+                            <div class="tweet">
+                                <p class="tweet"> {{ tweets[i] }} </p>
+                                <input type='hidden' value='{{ tweets[i] }}' name='{{ tw_options[i] }}'>
+                                <input type='hidden' value='{{ tweet_ids[i] }}' name='{{ tw_id_options[i] }}'>
+                                <input type='hidden' value='{{ run_ids[i] }}' name='{{ run_id_options[i] }}'>
+                            </div>
+                            <input type="radio" name="{{ i }}" value="Irrelevant"> Irrelevant &nbsp &nbsp &nbsp
+                            <input type="radio" name="{{ i }}" value="Official Report"> Official Report &nbsp &nbsp &nbsp
+                            <input type="radio" name="{{ i }}" value="Sickness"> Sickness
+                            <input type='hidden' value='' name='{{ i }}'>
+                        </li>
+                        {{ test }}
+                        {% endfor %}
+                    </ul>
+                    <Center><input type="submit" name="submit" value="Submit & Get More Tweets" class="btn btn-primary">
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="instruction" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><Center>Instructions</Center></h3>
+            </div>
+            <div class="panel-body"><p> <b>Goal</b>: Track mentions of the disease in tweets. (We are interested in
+              the presence of dengue in a region. Any information which suggests that there is dengue transmission in
+              that region would be useful!) </p>
+              <p> The categories include:</p>
+              <ul>
+                <li><b>Sickness</b>: Self report or report of dengue disease in others.</li>
+                <li><b>Official report</b>: Tweets from government or other official organizations highlighting the presence
+                  of dengue within the country. This excludes tweets that mention risk of dengue without indicating
+                  that there have been reported cases of dengue.</li>
+                <li><b>Irrelevant</b>: Includes mentions of dengue fever music group, jokes, or other mentions of dengue not
+                  relating to illness.</li>
+              </ul>
+              <p> <i>PLEASE NOTE</i>: Tweets can be in different languages - if you do not understand the language, please
+                ignore (do not tag at all). </p>
+              <center><a class="btn btn-primary" data-dismiss="modal">Close</a></center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+{% endblock content %}

@@ -1,0 +1,20 @@
+.panel-heading {
+    font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
+}
+
+.panel-body {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.overviewtitle {
+    font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
+}
+
+.overviewparagraph {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+.login_title {
+    font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
+}
